@@ -1,0 +1,59 @@
+﻿@using DevSpot.Constants;
+@model IEnumerable<JobPosting>
+
+
+@{
+}
+
+<h1 class="text-center m-5">All Developer Jobs</h1>
+
+
+<div class="list-group">
+    @foreach(var jobPosting in Model)
+    {
+        <div class="list-group-item" id="job-posting-@jobPosting.Id">
+            <h3>@jobPosting.Title</h3>
+            <p>@jobPosting.Description</p>
+            <p><strong>Company:</strong> @jobPosting.Company</p>
+            <p><strong>Location:</strong> @jobPosting.Location</p>
+            <p><strong>Date:</strong> @jobPosting.PostedDate.ToShortDateString()</p>
+            <p><strong>User:</strong> @jobPosting.User</p>
+
+            @if(User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Admin))
+            {
+                <div onclick="deleteJobPosting(@jobPosting.Id)" class="btn btn-sm btn-danger">Delete</div>
+            }
+        </div>
+
+    }
+</div>
+
+@section Scripts {
+    
+    <script>
+
+        function deleteJobPosting(id) {
+           if(confirm("Are u sure you want to delete this job posting?"))
+           {
+               // url
+               // type (delete)
+               // success -> visually remove the job posting
+               // fail -> show an error message
+
+              $.ajax({
+                  url: "@Url.Action("Delete", "JobPostings")/" + id, // .../jobpostings/delete/5
+                  type: "delete",
+                  success: function(result) {
+                      $("#job-posting-" + id).remove();
+                  },
+                  error: function(err) {
+                      alert("An error occured")
+                  }
+              });
+           }
+        }
+
+       
+    </script>
+    
+}
