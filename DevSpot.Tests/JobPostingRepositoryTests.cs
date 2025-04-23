@@ -54,7 +54,7 @@ namespace DevSpot.Tests
 
             // result?
 
-            var result = db.JobPostings.SingleOrDefault(x => x.Title == "Test Title Adding"); // x => x.Title == "Test Title" ask chat gpt
+            var result = db.JobPostings.SingleOrDefault(x => x.Title == "Test Title Adding"); 
 
             // assert
 
@@ -88,7 +88,7 @@ namespace DevSpot.Tests
             
             await db.SaveChangesAsync();
 
-            var result = await repository.GetByIdAsync(jobPosting.Id); // ask chatgpt why without await doesnt show result."Title"
+            var result = await repository.GetByIdAsync(jobPosting.Id); 
 
             Assert.NotNull(result);
             Assert.Equal("Test Title", result.Title);
@@ -101,7 +101,7 @@ namespace DevSpot.Tests
             var db = CreateDbContext();
             var repository = new JobPostingRepository(db);
 
-            await Assert.ThrowsAsync<KeyNotFoundException>(() => repository.GetByIdAsync(999)); // why doesnt it work without await // ask about arrow function
+            await Assert.ThrowsAsync<KeyNotFoundException>(() => repository.GetByIdAsync(999)); 
         }
 
         [Fact]
